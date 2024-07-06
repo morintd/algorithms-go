@@ -7,31 +7,31 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func generateTestTree() *BinarySearchTree {
-	return &BinarySearchTree{
-		&Node{
+func generateTestTree() *BinarySearchTree[int] {
+	return &BinarySearchTree[int]{
+		&Node[int]{
 			Value: 50,
-			Left: &Node{
+			Left: &Node[int]{
 				Value: 40,
-				Left: &Node{
+				Left: &Node[int]{
 					Right: nil,
 					Left:  nil,
 					Value: 35,
 				},
-				Right: &Node{
+				Right: &Node[int]{
 					Value: 45,
 					Right: nil,
 					Left:  nil,
 				},
 			},
-			Right: &Node{
+			Right: &Node[int]{
 				Value: 60,
-				Left: &Node{
+				Left: &Node[int]{
 					Value: 55,
 					Right: nil,
 					Left:  nil,
 				},
-				Right: &Node{
+				Right: &Node[int]{
 					Value: 65,
 					Right: nil,
 					Left:  nil,
@@ -41,7 +41,7 @@ func generateTestTree() *BinarySearchTree {
 	}
 }
 
-func TestTreeSearch(t *testing.T) {
+func TestBinarySearchTree(t *testing.T) {
 
 	t.Run("Should return Node with value", func(t *testing.T) {
 		tree := generateTestTree()
@@ -56,8 +56,8 @@ func TestTreeSearch(t *testing.T) {
 	})
 
 	t.Run("Should return nil when tree has no root", func(t *testing.T) {
-		tree := BinarySearchTree{}
-		var expected *Node
+		tree := BinarySearchTree[int]{}
+		var expected *Node[int]
 
 		node := tree.Search(0)
 		assert.Equal(t, node, expected)
@@ -65,7 +65,7 @@ func TestTreeSearch(t *testing.T) {
 
 	t.Run("Should return nil when value does not exist", func(t *testing.T) {
 		tree := generateTestTree()
-		var expected *Node
+		var expected *Node[int]
 
 		node := tree.Search(47)
 		assert.Equal(t, node, expected)
@@ -74,7 +74,7 @@ func TestTreeSearch(t *testing.T) {
 
 func TestTreeAdd(t *testing.T) {
 	t.Run("Should set root when root is nil", func(t *testing.T) {
-		tree := &BinarySearchTree{}
+		tree := &BinarySearchTree[int]{}
 		tree.Add(5)
 
 		assert.Equal(t, tree.root.Value, 5)
@@ -104,8 +104,8 @@ func TestTreeFindMin(t *testing.T) {
 	})
 
 	t.Run("Should return nil if root is nil", func(t *testing.T) {
-		tree := &BinarySearchTree{}
-		var expected *Node
+		tree := &BinarySearchTree[int]{}
+		var expected *Node[int]
 
 		node := tree.FindMin()
 		assert.Equal(t, node, expected)
@@ -122,8 +122,8 @@ func TestTreeFindMax(t *testing.T) {
 	})
 
 	t.Run("Should return nil if root is nil", func(t *testing.T) {
-		tree := &BinarySearchTree{}
-		var expected *Node
+		tree := &BinarySearchTree[int]{}
+		var expected *Node[int]
 
 		node := tree.FindMax()
 		assert.Equal(t, node, expected)
@@ -133,20 +133,20 @@ func TestTreeFindMax(t *testing.T) {
 func TestTreeRemove(t *testing.T) {
 
 	t.Run("Should return nil if root is nil", func(t *testing.T) {
-		tree := &BinarySearchTree{}
-		var expected *Node
+		tree := &BinarySearchTree[int]{}
+		var expected *Node[int]
 
 		node := tree.Delete(50)
 		assert.Equal(t, node, expected)
 	})
 
 	t.Run("Should remove root if single node", func(t *testing.T) {
-		tree := &BinarySearchTree{&Node{
+		tree := &BinarySearchTree[int]{&Node[int]{
 			Value: 50,
 			Right: nil,
 			Left:  nil,
 		}}
-		var expected *Node
+		var expected *Node[int]
 
 		tree.Delete(50)
 		assert.Equal(t, tree.root, expected)

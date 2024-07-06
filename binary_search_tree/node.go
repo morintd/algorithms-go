@@ -1,14 +1,17 @@
 package binarysearchtree
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
-type Node struct {
-	Value int
-	Left  *Node
-	Right *Node
+type Node[T cmp.Ordered] struct {
+	Value T
+	Left  *Node[T]
+	Right *Node[T]
 }
 
-func (node *Node) Walk(value int) *Node {
+func (node *Node[T]) Walk(value T) *Node[T] {
 	if node.Value >= value && node.Left != nil {
 		return node.Left
 	}
@@ -24,21 +27,21 @@ func (node *Node) Walk(value int) *Node {
 	return nil
 }
 
-func (node *Node) Add(value int) *Node {
+func (node *Node[T]) Add(value T) *Node[T] {
 	if value <= node.Value && node.Left == nil {
-		node.Left = &Node{Value: value}
+		node.Left = &Node[T]{Value: value}
 		return node.Left
 	}
 
 	if value > node.Value && node.Right == nil {
-		node.Right = &Node{Value: value}
+		node.Right = &Node[T]{Value: value}
 		return node.Right
 	}
 
 	return node.Walk(value).Add(value)
 }
 
-func (node *Node) Search(value int) *Node {
+func (node *Node[T]) Search(value T) *Node[T] {
 	if node.Value == value {
 		return node
 	}
@@ -50,7 +53,7 @@ func (node *Node) Search(value int) *Node {
 	return nil
 }
 
-func (node *Node) FindMin() *Node {
+func (node *Node[T]) FindMin() *Node[T] {
 	if node.Left == nil {
 		return node
 	}
@@ -58,7 +61,7 @@ func (node *Node) FindMin() *Node {
 	return node.Left.FindMin()
 }
 
-func (node *Node) FindMax() *Node {
+func (node *Node[T]) FindMax() *Node[T] {
 	if node.Right == nil {
 		return node
 	}
@@ -66,7 +69,7 @@ func (node *Node) FindMax() *Node {
 	return node.Right.FindMax()
 }
 
-func (node *Node) Delete(value int) *Node {
+func (node *Node[T]) Delete(value T) *Node[T] {
 	if node.Value == value {
 		if node.Left != nil && node.Right != nil {
 			node.Value = node.Right.FindMin().Value
@@ -85,6 +88,6 @@ func (node *Node) Delete(value int) *Node {
 	return node
 }
 
-func (node *Node) String() string {
-	return fmt.Sprintf("Node{Value:%d}", node.Value)
+func (node *Node[T]) String() string {
+	return fmt.Sprintf("Node{Value:%v}", node.Value)
 }

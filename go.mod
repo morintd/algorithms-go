@@ -1,4 +1,4 @@
-module binary-search-tree
+module algorithms-go
 
 go 1.22.4
 

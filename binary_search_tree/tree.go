@@ -1,10 +1,12 @@
 package binarysearchtree
 
-type BinarySearchTree struct {
-	root *Node
+import "cmp"
+
+type BinarySearchTree[T cmp.Ordered] struct {
+	root *Node[T]
 }
 
-func (tree *BinarySearchTree) Search(value int) *Node {
+func (tree *BinarySearchTree[T]) Search(value T) *Node[T] {
 	if tree.root == nil {
 		return nil
 	}
@@ -12,16 +14,16 @@ func (tree *BinarySearchTree) Search(value int) *Node {
 	return tree.root.Search(value)
 }
 
-func (tree *BinarySearchTree) Add(value int) *Node {
+func (tree *BinarySearchTree[T]) Add(value T) *Node[T] {
 	if tree.root == nil {
-		tree.root = &Node{Value: value}
+		tree.root = &Node[T]{Value: value}
 		return tree.root
 	} else {
 		return tree.root.Add(value)
 	}
 }
 
-func (tree *BinarySearchTree) FindMin() *Node {
+func (tree *BinarySearchTree[T]) FindMin() *Node[T] {
 	if tree.root == nil {
 		return nil
 	}
@@ -29,7 +31,7 @@ func (tree *BinarySearchTree) FindMin() *Node {
 	return tree.root.FindMin()
 }
 
-func (tree *BinarySearchTree) FindMax() *Node {
+func (tree *BinarySearchTree[T]) FindMax() *Node[T] {
 	if tree.root == nil {
 		return nil
 	}
@@ -37,7 +39,7 @@ func (tree *BinarySearchTree) FindMax() *Node {
 	return tree.root.FindMax()
 }
 
-func (tree *BinarySearchTree) Delete(value int) *Node {
+func (tree *BinarySearchTree[T]) Delete(value T) *Node[T] {
 	if tree.root == nil {
 		return nil
 	}

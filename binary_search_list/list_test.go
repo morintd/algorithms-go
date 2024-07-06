@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestListSearch(t *testing.T) {
+func TestBinarySearchList(t *testing.T) {
 	haystack := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 
 	t.Run("Should return -1 when value does not exist (high)", func(t *testing.T) {
